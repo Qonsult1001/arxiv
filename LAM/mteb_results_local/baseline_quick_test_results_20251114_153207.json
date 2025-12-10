@@ -1,0 +1,23 @@
+{
+  "STS12": {
+    "error": "'DataLoader' object is not subscriptable"
+  },
+  "STS13": {
+    "error": "'DataLoader' object is not subscriptable"
+  },
+  "STS14": {
+    "error": "'DataLoader' object is not subscriptable"
+  },
+  "STS15": {
+    "error": "'DataLoader' object is not subscriptable"
+  },
+  "STS16": {
+    "error": "'DataLoader' object is not subscriptable"
+  },
+  "STSBenchmark": {
+    "error": "'DataLoader' object is not subscriptable"
+  },
+  "SICK-R": {
+    "error": "'DataLoader' object is not subscriptable"
+  }
+}

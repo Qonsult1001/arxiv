@@ -1,0 +1,72 @@
+[
+    {
+        "experiment": "Enhanced LAM (Ours)",
+        "pearson_score": 0.8052,
+        "spearman_score": 0.8052,
+        "final_loss": 1.1807,
+        "training_time_sec": 1184.85,
+        "params": 4683732,
+        "ablation_config": {
+            "use_enhanced_flux": true,
+            "use_hierarchical_decay": true,
+            "use_delta_rule": true
+        },
+        "ortho_weight": 0.002
+    },
+    {
+        "experiment": "w/o Resonance Flux",
+        "pearson_score": 0.8036,
+        "spearman_score": 0.8031,
+        "final_loss": 1.2346,
+        "training_time_sec": 1183.92,
+        "params": 4683732,
+        "ablation_config": {
+            "use_enhanced_flux": false,
+            "use_hierarchical_decay": true,
+            "use_delta_rule": true
+        },
+        "ortho_weight": 0.002
+    },
+    {
+        "experiment": "w/o Hierarchy (Undifferentiated States)",
+        "pearson_score": 0.8028,
+        "spearman_score": 0.8019,
+        "final_loss": 1.2722,
+        "training_time_sec": 1162.63,
+        "params": 4628148,
+        "ablation_config": {
+            "use_enhanced_flux": true,
+            "use_hierarchical_decay": false,
+            "use_delta_rule": true
+        },
+        "ortho_weight": 0.002
+    },
+    {
+        "experiment": "w/o Orthogonal Reg.",
+        "pearson_score": 0.805,
+        "spearman_score": 0.8029,
+        "final_loss": 1.2824,
+        "training_time_sec": 1190.83,
+        "params": 4683732,
+        "ablation_config": {
+            "use_enhanced_flux": true,
+            "use_hierarchical_decay": true,
+            "use_delta_rule": true
+        },
+        "ortho_weight": 0.0
+    },
+    {
+        "experiment": "w/o Delta Rule (Standard Linear)",
+        "pearson_score": 0.8042,
+        "spearman_score": 0.8023,
+        "final_loss": 1.4191,
+        "training_time_sec": 1091.1,
+        "params": 4683732,
+        "ablation_config": {
+            "use_enhanced_flux": true,
+            "use_hierarchical_decay": true,
+            "use_delta_rule": false
+        },
+        "ortho_weight": 0.002
+    }
+]

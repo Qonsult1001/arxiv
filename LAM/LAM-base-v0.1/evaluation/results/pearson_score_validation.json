@@ -1,0 +1,124 @@
+{
+  "test_name": "Pearson Score Validation on STS-B",
+  "model_path": "../LAM-base-v1",
+  "baseline_path": "all-MiniLM-L6-v2",
+  "dataset": {
+    "name": "STS-B Validation Set (first 1500 samples)",
+    "num_pairs": 1500
+  },
+  "lam_results": {
+    "pearson": 0.8365045307308433,
+    "pearson_p_value": 0.0,
+    "spearman": 0.8372236665994783,
+    "spearman_p_value": 0.0,
+    "confidence_interval_95": [
+      0.820829727322098,
+      0.8512717906914996
+    ],
+    "error_analysis": {
+      "mean_absolute_error": 2.3520020795762537,
+      "root_mean_squared_error": 2.714729374395853,
+      "median_absolute_error": 2.251868724822998,
+      "max_error": 4.714858531951904,
+      "error_std": 1.3643730990326561,
+      "error_percentiles": {
+        "25th": 1.2582231760025024,
+        "50th": 2.251868724822998,
+        "75th": 3.565137505531311,
+        "90th": 4.299959771335126,
+        "95th": 4.441397500038147,
+        "99th": 4.559872570037842
+      }
+    },
+    "per_range_analysis": {
+      "Very Dissimilar": {
+        "count": 344,
+        "pearson": 0.522234039577709,
+        "mae": 4.2008280342141555
+      },
+      "Dissimilar": {
+        "count": 254,
+        "pearson": 0.25450934422072746,
+        "mae": 3.205246564910168
+      },
+      "Somewhat Similar": {
+        "count": 273,
+        "pearson": 0.055051848175740034,
+        "mae": 2.3048398747985614
+      },
+      "Similar": {
+        "count": 365,
+        "pearson": 0.23809619723444414,
+        "mae": 1.4377547466591614
+      },
+      "Very Similar": {
+        "count": 208,
+        "pearson": 0.38565792549245204,
+        "mae": 0.5336806567815634
+      }
+    }
+  },
+  "baseline_results": {
+    "pearson": 0.8696194540757578,
+    "pearson_p_value": 0.0,
+    "spearman": 0.8671637433378805,
+    "spearman_p_value": 0.0,
+    "confidence_interval_95": [
+      0.857228609578486,
+      0.8813275795406156
+    ],
+    "error_analysis": {
+      "mean_absolute_error": 1.5823911440471807,
+      "root_mean_squared_error": 1.8341862995195515,
+      "median_absolute_error": 1.5690168738365173,
+      "max_error": 3.948378086090088,
+      "error_std": 0.9632778584621793,
+      "error_percentiles": {
+        "25th": 0.8199332356452942,
+        "50th": 1.5690168738365173,
+        "75th": 2.395481675863266,
+        "90th": 2.7991601034998896,
+        "95th": 2.9845946192741395,
+        "99th": 3.2442529882490634
+      }
+    },
+    "per_range_analysis": {
+      "Very Dissimilar": {
+        "count": 344,
+        "pearson": 0.5940228650690751,
+        "mae": 2.686412957908456
+      },
+      "Dissimilar": {
+        "count": 254,
+        "pearson": 0.3276029912873722,
+        "mae": 2.2414069917258317
+      },
+      "Somewhat Similar": {
+        "count": 273,
+        "pearson": 0.109249633664154,
+        "mae": 1.6342611688397306
+      },
+      "Similar": {
+        "count": 365,
+        "pearson": 0.2870374443753227,
+        "mae": 0.9735212704906725
+      },
+      "Very Similar": {
+        "count": 208,
+        "pearson": 0.3804869416717475,
+        "mae": 0.3318174206293546
+      }
+    }
+  },
+  "comparison": {
+    "pearson_gap": 0.033114923344914504,
+    "pearson_ratio": 0.9619202132729316,
+    "pearson_percentage": 96.19202132729316
+  },
+  "validation_status": {
+    "claimed_score": 0.836,
+    "achieved_score": 0.8365045307308433,
+    "within_ci": true,
+    "validated": true
+  }
+}

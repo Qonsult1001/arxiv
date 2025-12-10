@@ -1,0 +1,7 @@
+{
+  "model_type": "DeltaNetPure6Layer",
+  "d_model": 384,
+  "num_heads": 12,
+  "num_layers": 6,
+  "architecture": "EnhancedHierarchicalDeltaNet"
+}

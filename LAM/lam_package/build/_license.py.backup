@@ -1,0 +1,223 @@
+"""
+License Management for LAM
+===========================
+
+Handles license validation for Pro/Enterprise tiers.
+Cross-platform support for Windows, Linux, and macOS.
+"""
+
+import json
+import os
+import platform
+from pathlib import Path
+from typing import Optional, Dict, Any, List
+from datetime import datetime, timedelta
+
+
+class LicenseManager:
+    """Manages license validation and tier detection."""
+    
+    LICENSE_ENV_VAR = "LAM_LICENSE_KEY"
+    
+    DEFAULT_LIMIT = 0x2000
+    PRO_LIMIT = 0x8000
+    
+    @staticmethod
+    def _get_license_locations(model_path: Optional[Path] = None) -> List[Path]:
+        """
+        Get license file locations based on platform.
+        
+        Args:
+            model_path: Optional path to model directory (checked first)
+        
+        Returns:
+            List of paths to check for license files
+        """
+        locations = []
+        
+        if model_path:
+            locations.append(model_path / "license.json")
+        
+        home = Path.home()
+        if platform.system() == "Windows":
+            appdata = os.getenv("APPDATA")
+            if appdata:
+                locations.append(Path(appdata) / "lam" / "license.json")
+            localappdata = os.getenv("LOCALAPPDATA")
+            if localappdata:
+                locations.append(Path(localappdata) / "lam" / "license.json")
+        else:
+            locations.append(home / ".lam" / "license.json")
+        
+        locations.append(Path.cwd() / "lam_license.json")
+        
+        if platform.system() == "Windows":
+            programdata = os.getenv("ProgramData")
+            if programdata:
+                locations.append(Path(programdata) / "lam" / "license.json")
+        elif platform.system() == "Linux":
+            locations.append(Path("/etc/lam/license.json"))
+        elif platform.system() == "Darwin":
+            locations.append(Path("/Library/Application Support/lam/license.json"))
+        
+        return locations
+    
+    def __init__(self, model_path: Optional[Path] = None):
+        """
+        Initialize license manager.
+        
+        Args:
+            model_path: Optional path to model directory (checks for license.json there too)
+        """
+        self.model_path = model_path
+        self.license_data: Optional[Dict[str, Any]] = None
+        self.tier: str = "free"
+        self.max_length: int = self.DEFAULT_LIMIT
+        self.license_path: Optional[Path] = None
+        
+        self._load_license()
+    
+    def _load_license(self) -> None:
+        """Load and validate license from various locations."""
+        license_locations = self._get_license_locations(self.model_path)
+        
+        for license_path in license_locations:
+            if license_path.exists():
+                if self._validate_license_file(license_path):
+                    self.license_path = license_path
+                    return
+        
+        license_key = os.getenv(self.LICENSE_ENV_VAR)
+        if license_key:
+            if self._validate_license_key(license_key):
+                return
+        
+        self.license_data = None
+        self.tier = "free"
+        self.max_length = self.DEFAULT_LIMIT
+        self.license_path = None
+    
+    def _validate_license_file(self, license_path: Path) -> bool:
+        """Validate a license file."""
+        try:
+            with open(license_path, 'r') as f:
+                data = json.load(f)
+            
+            if not isinstance(data, dict):
+                return False
+            
+            if "license_key" not in data or "tier" not in data:
+                return False
+            
+            license_key = data["license_key"]
+            if not self._validate_license_key(license_key):
+                return False
+            
+            if "expires_at" in data:
+                expires_at = datetime.fromisoformat(data["expires_at"])
+                if datetime.now() > expires_at:
+                    return False
+            
+            self.license_data = data
+            self.tier = data.get("tier", "pro").lower()
+            
+            if self.tier == "enterprise":
+                self.max_length = self.PRO_LIMIT
+            elif self.tier == "pro":
+                self.max_length = self.PRO_LIMIT
+            else:
+                self.max_length = self.DEFAULT_LIMIT
+            
+            return True
+            
+        except Exception:
+            return False
+    
+    def _validate_license_key(self, license_key: str) -> bool:
+        """
+        Validate a license key.
+        
+        This is a simple validation - in production, you'd want to:
+        1. Verify signature with your private key
+        2. Check against a license server
+        3. Validate format and checksum
+        """
+        if not license_key or len(license_key) < 16:
+            return False
+        
+        if license_key.startswith("LAM-"):
+            parts = license_key.split("-")
+            if len(parts) == 5:
+                return True
+        
+        return False
+    
+    def is_licensed(self) -> bool:
+        """Check if a valid license is present."""
+        return self.license_data is not None
+    
+    def get_tier(self) -> str:
+        """Get current license tier."""
+        return self.tier
+    
+    def get_max_length(self) -> int:
+        """Get maximum sequence length for current tier."""
+        return self.max_length
+    
+    def get_license_info(self) -> Optional[Dict[str, Any]]:
+        """Get license information (without sensitive data)."""
+        if not self.license_data:
+            return None
+        
+        return {
+            "tier": self.tier,
+            "max_length": self.max_length,
+            "expires_at": self.license_data.get("expires_at"),
+            "customer": self.license_data.get("customer", "Unknown"),
+        }
+
+
+def create_sample_license(output_path: Path, tier: str = "pro") -> None:
+    """
+    Create a sample license file (for testing).
+    
+    In production, licenses would be generated by your license server.
+    
+    Args:
+        output_path: Path where to create the license file
+        tier: License tier (free, pro, enterprise)
+    """
+    license_data = {
+        "license_key": f"LAM-{tier.upper()}-DEMO-1234-5678",
+        "tier": tier,
+        "customer": "Demo Customer",
+        "issued_at": datetime.now().isoformat(),
+        "expires_at": (datetime.now() + timedelta(days=365)).isoformat(),
+    }
+    
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(output_path, 'w') as f:
+        json.dump(license_data, f, indent=2)
+    
+    print(f"✅ Sample license created: {output_path}")
+    print(f"   Tier: {tier}")
+    print(f"   Max Length: {32768 if tier in ['pro', 'enterprise'] else 8192}")
+
+
+def get_license_locations_info() -> Dict[str, Any]:
+    """
+    Get information about where license files are checked on the current platform.
+    
+    Returns:
+        Dictionary with platform info and license locations
+    """
+    import platform
+    manager = LicenseManager()
+    locations = manager._get_license_locations()
+    
+    return {
+        "platform": platform.system(),
+        "platform_version": platform.version(),
+        "license_locations": [str(loc) for loc in locations],
+        "environment_variable": LicenseManager.LICENSE_ENV_VAR,
+    }

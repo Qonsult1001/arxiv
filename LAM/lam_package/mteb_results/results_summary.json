@@ -1,0 +1,16 @@
+{
+  "tasks": [
+    "STSBenchmark"
+  ],
+  "task_types": [
+    "STS"
+  ],
+  "scores": {
+    "STSBenchmark": {
+      "test_default_main": 0.8188058783749886,
+      "test_default_pearson": 0.8201391740744567,
+      "test_default_spearman": 0.8188059335607977,
+      "test_average_main": 0.8188058783749886
+    }
+  }
+}

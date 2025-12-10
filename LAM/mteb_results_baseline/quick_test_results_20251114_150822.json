@@ -1,0 +1,23 @@
+{
+  "STS12": {
+    "error": "'SentenceTransformer' object has no attribute 'model_card_data'"
+  },
+  "STS13": {
+    "error": "'SentenceTransformer' object has no attribute 'model_card_data'"
+  },
+  "STS14": {
+    "error": "'SentenceTransformer' object has no attribute 'model_card_data'"
+  },
+  "STS15": {
+    "error": "'SentenceTransformer' object has no attribute 'model_card_data'"
+  },
+  "STS16": {
+    "error": "'SentenceTransformer' object has no attribute 'model_card_data'"
+  },
+  "STSBenchmark": {
+    "error": "'SentenceTransformer' object has no attribute 'model_card_data'"
+  },
+  "SICK-R": {
+    "error": "'SentenceTransformer' object has no attribute 'model_card_data'"
+  }
+}

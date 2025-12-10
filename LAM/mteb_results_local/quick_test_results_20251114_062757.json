@@ -1,0 +1,9 @@
+{
+  "STS12": "model_name='no_model_name_available' model_revision='no_revision_available' task_results=[TaskResult(task_name=STS12, scores=...)] default_modalities=['text']",
+  "STS13": "model_name='no_model_name_available' model_revision='no_revision_available' task_results=[TaskResult(task_name=STS13, scores=...)] default_modalities=['text']",
+  "STS14": "model_name='no_model_name_available' model_revision='no_revision_available' task_results=[TaskResult(task_name=STS14, scores=...)] default_modalities=['text']",
+  "STS15": "model_name='no_model_name_available' model_revision='no_revision_available' task_results=[TaskResult(task_name=STS15, scores=...)] default_modalities=['text']",
+  "STS16": "model_name='no_model_name_available' model_revision='no_revision_available' task_results=[TaskResult(task_name=STS16, scores=...)] default_modalities=['text']",
+  "STSBenchmark": "model_name='no_model_name_available' model_revision='no_revision_available' task_results=[TaskResult(task_name=STSBenchmark, scores=...)] default_modalities=['text']",
+  "SICK-R": "model_name='no_model_name_available' model_revision='no_revision_available' task_results=[TaskResult(task_name=SICK-R, scores=...)] default_modalities=['text']"
+}

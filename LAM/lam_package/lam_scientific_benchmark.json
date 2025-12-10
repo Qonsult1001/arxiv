@@ -1,0 +1,191 @@
+{
+  "semantic_quality": {
+    "384": {
+      "spearman": 0.8188623236865318,
+      "pearson": 0.820130211411676,
+      "p_value": 0.0,
+      "mean_similarity": 0.5837968587875366,
+      "std_similarity": 0.2598557770252228
+    },
+    "256": {
+      "spearman": 0.8191609558726782,
+      "pearson": 0.8193216759551732,
+      "p_value": 0.0,
+      "mean_similarity": 0.5830056667327881,
+      "std_similarity": 0.2615227699279785
+    },
+    "128": {
+      "spearman": 0.8076523999672979,
+      "pearson": 0.807600779191543,
+      "p_value": 3.486325e-318,
+      "mean_similarity": 0.577010989189148,
+      "std_similarity": 0.2652965486049652
+    },
+    "64": {
+      "spearman": 0.7950437140983416,
+      "pearson": 0.7911086325535933,
+      "p_value": 2.762124158238661e-301,
+      "mean_similarity": 0.5739966630935669,
+      "std_similarity": 0.2736375629901886
+    }
+  },
+  "retrieval_performance": {},
+  "dimension_recommendations": {},
+  "statistical_tests": {},
+  "needle_haystack": {
+    "1000": {
+      "standard": {
+        "recall": 100.0,
+        "correct": 5,
+        "total": 5
+      }
+    },
+    "5000": {
+      "standard": {
+        "recall": 100.0,
+        "correct": 5,
+        "total": 5
+      }
+    },
+    "10000": {
+      "standard": {
+        "recall": 100.0,
+        "correct": 5,
+        "total": 5
+      }
+    },
+    "20000": {
+      "standard": {
+        "recall": 100.0,
+        "correct": 5,
+        "total": 5
+      }
+    },
+    "30000": {
+      "standard": {
+        "recall": 100.0,
+        "correct": 5,
+        "total": 5
+      }
+    },
+    "40000": {
+      "standard": {
+        "recall": 100.0,
+        "correct": 5,
+        "total": 5
+      }
+    },
+    "50000": {
+      "standard": {
+        "recall": 100.0,
+        "correct": 5,
+        "total": 5
+      }
+    },
+    "60000": {
+      "standard": {
+        "recall": 100.0,
+        "correct": 5,
+        "total": 5
+      }
+    }
+  },
+  "standard_vs_streaming": {
+    "128": {
+      "time": 8.643150329589844,
+      "tps": 14809.414984000883,
+      "memory": 0.00579833984375,
+      "memory_type": "\u2705 O(1) Constant"
+    },
+    "512": {
+      "time": 8.810758590698242,
+      "tps": 58110.77386010012,
+      "memory": 0.022918701171875,
+      "memory_type": "\u2705 O(1) Constant"
+    },
+    "1024": {
+      "time": 17.224550247192383,
+      "tps": 59450.02832029898,
+      "memory": 0.02292013168334961,
+      "memory_type": "\u2705 O(1) Constant"
+    },
+    "2048": {
+      "time": 34.40713882446289,
+      "tps": 59522.53136909794,
+      "memory": 0.02292013168334961,
+      "memory_type": "\u2705 O(1) Constant"
+    },
+    "4096": {
+      "time": 68.38870048522949,
+      "tps": 59892.93510387215,
+      "memory": 0.02292013168334961,
+      "memory_type": "\u2705 O(1) Constant"
+    },
+    "8192": {
+      "time": 136.4743709564209,
+      "tps": 60025.922395464826,
+      "memory": 0.02292013168334961,
+      "memory_type": "\u2705 O(1) Constant"
+    },
+    "16384": {
+      "time": 273.81014823913574,
+      "tps": 59837.08093131309,
+      "memory": 0.02292013168334961,
+      "memory_type": "\u2705 O(1) Constant"
+    },
+    "32768": {
+      "time": 548.2103824615479,
+      "tps": 59772.67313484051,
+      "memory": 0.02292013168334961,
+      "memory_type": "\u2705 O(1) Constant"
+    },
+    "65536": {
+      "time": 1099.9815464019775,
+      "tps": 59579.18131842051,
+      "memory": 0.02292013168334961,
+      "memory_type": "\u2705 O(1) Constant"
+    }
+  },
+  "long_context": {
+    "512": {
+      "status": "success",
+      "similarity": 0.9999397397041321,
+      "time_ms": 9.093523025512695
+    },
+    "1024": {
+      "status": "success",
+      "similarity": 0.9978720545768738,
+      "time_ms": 28.502941131591797
+    },
+    "2048": {
+      "status": "success",
+      "similarity": 0.9975200295448303,
+      "time_ms": 48.63858222961426
+    },
+    "4096": {
+      "status": "success",
+      "similarity": 0.9971858859062195,
+      "time_ms": 86.07697486877441
+    },
+    "8192": {
+      "status": "success",
+      "similarity": 0.9970561861991882,
+      "time_ms": 257.62391090393066
+    },
+    "16384": {
+      "status": "success",
+      "similarity": 0.9965323209762573,
+      "time_ms": 316.8597221374512
+    },
+    "32768": {
+      "status": "success",
+      "similarity": 0.9963911771774292,
+      "time_ms": 631.2878131866455
+    },
+    "65536": {
+      "status": "success",
+      "similarity": 0.9937911033630371,
+      "time_ms": 1440.1378631591797
+    }
+  }
+}

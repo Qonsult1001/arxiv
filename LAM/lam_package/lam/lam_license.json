@@ -1,0 +1,13 @@
+{
+  "license_key": "lam_dev_xU2yIVG04xHHHPTgVv8ICAa2Qia7hpaDIpbO7GSkV5Q",
+  "tier": "enterprise",
+  "customer": "Developer Master License",
+  "issued_at": "2025-11-30T15:13:06.947492",
+  "expires_at": "2035-11-28T15:13:06.947496",
+  "features": [
+    "unlimited_context",
+    "32k_tokens",
+    "enterprise_support",
+    "development_access"
+  ]
+}

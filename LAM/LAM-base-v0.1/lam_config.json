@@ -1,0 +1,67 @@
+{
+  "model_name": "LAM-base-v1",
+  "model_type": "lam",
+  "architecture": "Linear Attention Model",
+  "d_model": 384,
+  "num_heads": 12,
+  "num_layers": 6,
+  "vocab_size": 30522,
+  "max_position_embeddings": 512,
+  "max_seq_length": 128,
+  "embedding_dim": 384,
+  "intermediate_size": 1536,
+
+  "lam_attention": {
+    "fast_decay_init": 0.3,
+    "slow_decay_init": 0.85,
+    "use_hierarchical_decay": true,
+    "use_enhanced_flux": true
+  },
+
+  "performance": {
+    "stsb_pearson": 0.836,
+    "stsb_spearman": 0.834,
+    "training_steps": 3500,
+    "dataset": "E5-Large distillation + AllNLI + STS-B"
+  },
+
+  "complexity": {
+    "attention": "O(n)",
+    "memory": "O(n)",
+    "max_context_length": "1M+ tokens"
+  },
+
+  "files": {
+    "base_model": "lam_base.bin",
+    "lam_layers": "lam_tweak.pt",
+    "tokenizer": "tokenizer.json",
+    "vocab": "vocab.txt"
+  },
+
+  "components": {
+    "lam_base.bin": {
+      "size_mb": 87,
+      "contains": [
+        "Token embeddings (30,522 × 384)",
+        "Position embeddings (512 × 384)",
+        "6 Feed-Forward Network layers",
+        "Layer normalization"
+      ],
+      "status": "frozen"
+    },
+    "lam_tweak.pt": {
+      "size_mb": 56,
+      "contains": [
+        "6 Linear attention layers",
+        "Dual-state memory (fast + slow)",
+        "Resonance flux mechanism",
+        "Adaptive decay parameters"
+      ],
+      "status": "trained"
+    }
+  },
+
+  "version": "1.0.0",
+  "release_date": "2024-11",
+  "license": "Proprietary Commercial"
+}

@@ -1,0 +1,22 @@
+{
+  "do_lower_case": true,
+  "unk_token": "[UNK]",
+  "sep_token": "[SEP]",
+  "pad_token": "[PAD]",
+  "cls_token": "[CLS]",
+  "mask_token": "[MASK]",
+  "tokenize_chinese_chars": true,
+  "strip_accents": null,
+  "name_or_path": "lam-research/LAM-base-v1",
+  "do_basic_tokenize": true,
+  "never_split": null,
+  "tokenizer_class": "BertTokenizer",
+  "model_max_length": 1572864,
+  "_tokenizer_info": {
+    "vocabulary_source": "all-MiniLM-L6-v2",
+    "vocab_size": 30522,
+    "type": "WordPiece",
+    "language": "English",
+    "note": "Inherited WordPiece vocabulary from all-MiniLM-L6-v2 for compatibility. tokenize_chinese_chars is a BERT tokenizer feature but LAM was trained on English only."
+  }
+}

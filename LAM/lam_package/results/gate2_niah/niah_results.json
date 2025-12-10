@@ -1,0 +1,227 @@
+{
+  "matrix": [
+    [
+      57.55631700158119,
+      47.36612103879452,
+      46.98689058423042,
+      40.082550048828125,
+      47.13279716670513,
+      42.12133511900902,
+      49.9053499661386,
+      51.60329733043909,
+      46.73873484134674,
+      46.08228839933872,
+      57.34068304300308
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "context_lengths": [
+    512,
+    1024,
+    2048,
+    4096,
+    8192,
+    16384,
+    32768,
+    65536
+  ],
+  "depths": [
+    0.0,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9,
+    1.0
+  ],
+  "metrics": {
+    "avg_recall": 6.055867778856984,
+    "min_recall": 0.0,
+    "perfect_cells_pct": 0.0
+  },
+  "detailed_results": [
+    {
+      "context_length": 512,
+      "depth": 0.0,
+      "recall_score": 57.55631700158119,
+      "similarity": 0.07556317001581192,
+      "needle": "The secret code is ALPHA-7749....",
+      "success": true
+    },
+    {
+      "context_length": 512,
+      "depth": 0.1,
+      "recall_score": 47.36612103879452,
+      "similarity": -0.026338789612054825,
+      "needle": "The password is butterfly42....",
+      "success": false
+    },
+    {
+      "context_length": 512,
+      "depth": 0.2,
+      "recall_score": 46.98689058423042,
+      "similarity": -0.03013109415769577,
+      "needle": "The meeting is at 3:47 PM....",
+      "success": false
+    },
+    {
+      "context_length": 512,
+      "depth": 0.3,
+      "recall_score": 40.082550048828125,
+      "similarity": -0.09917449951171875,
+      "needle": "The answer is forty-two....",
+      "success": false
+    },
+    {
+      "context_length": 512,
+      "depth": 0.4,
+      "recall_score": 47.13279716670513,
+      "similarity": -0.028672028332948685,
+      "needle": "The city is San Francisco....",
+      "success": false
+    },
+    {
+      "context_length": 512,
+      "depth": 0.5,
+      "recall_score": 42.12133511900902,
+      "similarity": -0.07878664880990982,
+      "needle": "The project name is Phoenix....",
+      "success": false
+    },
+    {
+      "context_length": 512,
+      "depth": 0.6,
+      "recall_score": 49.9053499661386,
+      "similarity": -0.000946500338613987,
+      "needle": "The budget is $1.5 million....",
+      "success": false
+    },
+    {
+      "context_length": 512,
+      "depth": 0.7,
+      "recall_score": 51.60329733043909,
+      "similarity": 0.016032973304390907,
+      "needle": "The deadline is March 15th....",
+      "success": true
+    },
+    {
+      "context_length": 512,
+      "depth": 0.8,
+      "recall_score": 46.73873484134674,
+      "similarity": -0.03261265158653259,
+      "needle": "The CEO is Sarah Johnson....",
+      "success": false
+    },
+    {
+      "context_length": 512,
+      "depth": 0.9,
+      "recall_score": 46.08228839933872,
+      "similarity": -0.03917711600661278,
+      "needle": "The product version is 3.2.1....",
+      "success": false
+    },
+    {
+      "context_length": 512,
+      "depth": 1.0,
+      "recall_score": 57.34068304300308,
+      "similarity": 0.07340683043003082,
+      "needle": "The secret code is ALPHA-7749....",
+      "success": true
+    }
+  ],
+  "heatmap_path": "results/gate2_niah/niah_heatmap.png"
+}

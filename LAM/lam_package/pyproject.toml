@@ -1,0 +1,76 @@
+[build-system]
+requires = [
+    "setuptools>=61.0",
+    "wheel",
+    "Cython>=0.29.0",
+    "numpy>=1.20.0",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lam-attn"
+version = "0.1.0-beta"
+description = "Linear Attention Model (LAM): Infinite context (32k+) with O(N) complexity."
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "Apache-2.0"}
+authors = [
+    {name = "Willie Olivier", email = "willie@saidhome.com"}
+]
+keywords = [
+    "rag",
+    "retrieval-augmented-generation",
+    "long-context",
+    "infinite-context",
+    "generative-ai",
+    "llm",
+    "foundation-models",
+    "linear-attention",
+    "transformers-alternative",
+    "efficient-nlp",
+    "document-analysis",
+    "enterprise-ai",
+    "memory-efficient",
+    "pytorch",
+    "deep-learning",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+dependencies = [
+    "torch>=2.0",
+    "numpy",
+    "tokenizers",
+]
+
+# Note: Backend selection is done at build time via LAM_BACKEND environment variable
+# This is configured in build/setup.py, not here
+# Publisher chooses: cython or jax (not both)
+
+[project.urls]
+Homepage = "https://github.com/said-research/lam"
+Documentation = "https://github.com/said-research/lam"
+Repository = "https://github.com/said-research/lam"
+Issues = "https://github.com/said-research/lam/issues"
+
+[tool.setuptools]
+packages = ["lam"]
+
+[tool.setuptools.package-data]
+# Note: Package data is conditionally set in build/setup.py based on LAM_BACKEND
+# Cython version: ["*.so", "*.pyd", "*.dylib"]
+# JAX version: ["_jax_core.py", "_jax_model_optimized.py", "_jax_model.py"]
+lam = ["*.so", "*.pyd", "*.dylib"]  # Default (overridden by setup.py)

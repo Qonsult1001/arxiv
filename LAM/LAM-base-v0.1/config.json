@@ -1,0 +1,32 @@
+{
+  "_name_or_path": "lam-research/LAM-base-v1",
+  "architectures": [
+    "LAMModel"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "gradient_checkpointing": false,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 384,
+  "initializer_range": 0.02,
+  "intermediate_size": 1536,
+  "layer_norm_eps": 1e-12,
+  "max_position_embeddings": 1572864,
+  "model_type": "lam",
+  "num_attention_heads": 12,
+  "num_hidden_layers": 6,
+  "pad_token_id": 0,
+  "position_embedding_type": "absolute",
+  "transformers_version": "4.8.2",
+  "type_vocab_size": 2,
+  "use_cache": true,
+  "vocab_size": 30522,
+  "_distillation_info": {
+    "stage_1_teacher": "all-MiniLM-L6-v2",
+    "stage_1_steps": 38000,
+    "stage_2_teacher": "E5-Large-v2",
+    "stage_2_steps": 3500,
+    "stage_2_pearson": 0.836,
+    "note": "LAM architecture with linear associative memory, trained via knowledge distillation"
+  }
+}

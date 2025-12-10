@@ -1,0 +1,46 @@
+# LAM Evaluation Suite - Python Dependencies
+# ============================================
+# Install with: pip install -r requirements.txt
+
+# Core ML/NLP Libraries
+sentence-transformers>=2.2.0
+transformers>=4.30.0
+torch>=2.0.0
+
+# High-Performance Backends
+triton>=2.0.0  # Triton kernels for NVIDIA Volta+ GPUs (fastest backend)
+onnx>=1.14.0  # ONNX model format support
+# ONNX Runtime: Install ONE of the following based on your hardware:
+# - onnxruntime>=1.15.0  # For CPU inference
+# - onnxruntime-gpu>=1.15.0  # For GPU inference (requires CUDA)
+onnxruntime-gpu>=1.15.0  # Default: GPU version (uncomment CPU version if no GPU)
+cython>=3.0.0  # Cython for compiling Python to C extensions (production builds)
+jax>=0.4.0  # JAX for automatic loop fusion and functional programming (experimental)
+jaxlib>=0.4.0  # JAX library with CPU/GPU support
+
+# Dataset Loading
+datasets>=2.14.0
+hf_transfer>=0.1.0
+
+# Scientific Computing
+numpy>=1.24.0
+scipy>=1.10.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Machine Learning Utilities
+scikit-learn>=1.3.0
+einops>=0.7.0
+
+# System Monitoring
+psutil>=5.9.0
+gputil>=1.4.0
+
+# Progress Bars
+tqdm>=4.65.0
+
+# Optional: Faster computation (recommended)
+# sentencepiece>=0.1.99
+# tokenizers>=0.13.0

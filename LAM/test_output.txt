@@ -1,0 +1,141 @@
+🧹 Cleared torch cache: /tmp/torchinductor_root
+✅ torch.compile enabled with default mode (CPU-safe)
+Using device: cuda
+Using device: cuda
+================================================================================
+🚀 LAM 8K INFERENCE TEST
+================================================================================
+
+📦 Loading model...
+Loading teacher model: /workspace/LAM/all-MiniLM-L6-v2
+✅ PURE 6-LAYER LINEAR DeltaNet (100% linear, 0% attention)
+   With: Resonance Flux, Hierarchical Memory, Cross-timescale Coupling
+   ⚡ Orthogonal initialization + TRUE orthogonal regularization
+   Loading checkpoint: /workspace/LAM/deltanet_minilm_6layers_FIXED_FROM_SCRATCH_NEWNEWFINAL/checkpoint_167000.pt
+   ✅ Loaded deltanet_layers
+   📊 Checkpoint score: 0.7696 Spearman
+
+   🔥 Warming up model (first run triggers compilation)...
+   ✅ Warmup complete!
+
+================================================================================
+TEST 1: Basic Functionality (Can it process different lengths?)
+================================================================================
+      128 tokens: ✅ SUCCESS (14.5ms, shape=torch.Size([1, 384]))
+      512 tokens: ✅ SUCCESS (30.2ms, shape=torch.Size([1, 384]))
+     1024 tokens: ✅ SUCCESS (69.4ms, shape=torch.Size([1, 384]))
+     2048 tokens: ✅ SUCCESS (127.4ms, shape=torch.Size([1, 384]))
+     4096 tokens: ✅ SUCCESS (244.0ms, shape=torch.Size([1, 384]))
+     8192 tokens: ✅ SUCCESS (486.2ms, shape=torch.Size([1, 384]))
+    16384 tokens: ✅ SUCCESS (965.7ms, shape=torch.Size([1, 384]))
+    32768 tokens: ✅ SUCCESS (1929.0ms, shape=torch.Size([1, 384]))
+    65536 tokens: ✅ SUCCESS (4041.0ms, shape=torch.Size([1, 384]))
+   131072 tokens: ✅ SUCCESS (8096.1ms, shape=torch.Size([1, 384]))
+
+================================================================================
+TEST 2: Semantic Consistency (Do embeddings stay stable at different lengths?)
+================================================================================
+
+   Testing semantic consistency...
+   'The quick brown fox jumps over the lazy ...' @   512 tokens: similarity=0.8277
+   'The quick brown fox jumps over the lazy ...' @  2048 tokens: similarity=0.8390
+   'The quick brown fox jumps over the lazy ...' @  8192 tokens: similarity=0.8456
+   'Machine learning is transforming how we ...' @   512 tokens: similarity=0.8460
+   'Machine learning is transforming how we ...' @  2048 tokens: similarity=0.8575
+   'Machine learning is transforming how we ...' @  8192 tokens: similarity=0.8617
+   'Natural language processing enables comp...' @   512 tokens: similarity=0.8571
+   'Natural language processing enables comp...' @  2048 tokens: similarity=0.8517
+   'Natural language processing enables comp...' @  8192 tokens: similarity=0.8594
+
+================================================================================
+TEST 3: Performance Benchmark (Speed vs Length)
+================================================================================
+
+Length     Time (ms)       Tokens/sec      Memory (MB)    
+------------------------------------------------------------
+128        14.45           8857            4237.7         
+512        30.30           16900           183.2          
+1024       69.12           14815           199.1          
+2048       128.85          15895           230.4          
+4096       250.28          16366           294.0          
+8192       502.12          16315           421.2          
+16384      974.18          16818           675.7          
+32768      1961.75         16703           1185.1         
+65536      3992.40         16415           2202.3         
+
+================================================================================
+TEST 4: Real-World Long Document Test
+================================================================================
+
+   Document length: ~73000 characters
+   Testing encoding...
+   Actual tokenized length: 8192 tokens
+   ✅ Successfully encoded 8192 tokens in 488.26ms
+   Output embedding shape: torch.Size([1, 384])
+   Embedding norm: 1.0000
+
+================================================================================
+TEST 5: STS-B Evaluation (DYNAMIC Padding)
+================================================================================
+
+   Testing on 1379 STS-B pairs (FULL test set)...
+   Using DYNAMIC padding (correct for variable length inputs)
+      max_length=  128: Pearson=0.7787, Spearman=0.7711 (1.15s)
+      max_length=  512: Pearson=0.7787, Spearman=0.7711 (1.13s)
+      max_length= 2048: Pearson=0.7787, Spearman=0.7711 (1.13s)
+      max_length= 8192: Pearson=0.7787, Spearman=0.7711 (1.13s)
+      max_length=16384: Pearson=0.7787, Spearman=0.7711 (1.13s)
+      max_length=32768: Pearson=0.7787, Spearman=0.7711 (1.12s)
+
+================================================================================
+TEST 6: 🔥 EXTREME LENGTH TEST - FIND THE LIMIT!
+================================================================================
+
+   Testing extreme lengths to find the breaking point...
+   (Will stop at first OOM or error)
+
+      8192 tokens: ✅ SUCCESS (478ms, 17127 tok/s, 0.41 GB)
+     16384 tokens: ✅ SUCCESS (956ms, 17132 tok/s, 0.66 GB)
+     32768 tokens: ✅ SUCCESS (1946ms, 16836 tok/s, 1.16 GB)
+     65536 tokens: ✅ SUCCESS (4028ms, 16270 tok/s, 2.15 GB)
+    131072 tokens: ✅ SUCCESS (8044ms, 16293 tok/s, 4.14 GB)
+    262144 tokens: ✅ SUCCESS (16184ms, 16198 tok/s, 8.12 GB)
+
+   🏆 FP32 MAXIMUM: 262,144 tokens!
+   📊 That's 512x the original 512 position embeddings!
+
+================================================================================
+TEST 7: 🚀 FP16 MODE - PUSH EVEN FURTHER!
+================================================================================
+
+   Converting model to FP16 (half precision)...
+   ✅ Model converted to FP16
+
+   Testing extreme lengths with FP16...
+   (Will stop at first OOM or error)
+
+/workspace/LAM/test_8k_inference.py:440: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(dtype=torch.float16):
+      8192 tokens: ✅ SUCCESS (783ms, 10459 tok/s, 0.29 GB)
+     16384 tokens: ✅ SUCCESS (1188ms, 13793 tok/s, 0.48 GB)
+     32768 tokens: ✅ SUCCESS (2228ms, 14709 tok/s, 0.84 GB)
+     65536 tokens: ✅ SUCCESS (4372ms, 14990 tok/s, 1.58 GB)
+    131072 tokens: ✅ SUCCESS (8960ms, 14628 tok/s, 3.04 GB)
+    262144 tokens: ✅ SUCCESS (17438ms, 15033 tok/s, 5.97 GB)
+    524288 tokens: ✅ SUCCESS (35290ms, 14857 tok/s, 11.82 GB)
+
+   🏆 FP16 MAXIMUM: 524,288 tokens!
+   📊 That's 1024x the original 512 position embeddings!
+
+================================================================================
+✅ EXTREME INFERENCE TEST COMPLETE
+================================================================================
+
+Summary:
+   FP32 Max: 262,144 tokens (512x interpolation)
+   FP16 Max: 524,288 tokens (1024x interpolation)
+   🚀 FP16 gives 2.0x more capacity!
+   ✅ Position embedding interpolation works
+   ✅ Performance scales linearly (O(n) complexity)
+   ✅ Ready for production use with VERY long documents
+================================================================================
