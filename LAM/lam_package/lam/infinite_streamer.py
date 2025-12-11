@@ -65,46 +65,12 @@ class InfiniteContextStreamer:
     
     def _project_state_to_embedding(self, S_slow: torch.Tensor) -> torch.Tensor:
         """
-        🧠 STATE-BASED EMBEDDING (Holographic Memory Projection)
-        
-        Converts the raw memory matrix S_slow [B, H, D_k, D_v] into a 384d embedding vector.
-        Uses 'v6_weighted_combo' strategy - the best performing method from diagnostics.
-        
-        This is the KEY FIX for preserving end-of-document information!
-        
-        Old Way (Mean Pooling): Average of output tokens → Signal diluted by noise
-        New Way (State Projection): Snapshot of accumulated memory → All information preserved
-        
-        Args:
-            S_slow: Memory state matrix [Batch, Heads, D_k, D_v] = [1, 12, 32, 32]
-        
-        Returns:
-            Embedding vector [Batch, 384]
+        Project S_slow to embedding space.
+        NOTE: This doesn't match query space without retrieval training.
         """
-        # S_slow shape: [B, H, D_k, D_v] -> typically [1, 12, 32, 32]
-        
-        # 1. Method 4: Extract Diagonals (Preserves Key-Value structure)
-        # The diagonal captures the strongest key-value associations
-        # [1, 12, 32, 32] -> diagonal of each head -> [1, 12, 32]
+        # S_slow: [B, H, D_k, D_v] = [1, 12, 32, 32]
         diagonals = torch.diagonal(S_slow, dim1=2, dim2=3)  # [B, 12, 32]
-        emb_diagonal = diagonals.flatten(1)  # [B, 384]
-        emb_diagonal = F.normalize(emb_diagonal, dim=1)
-        
-        # 2. Method 5: Sum Keys (Aggregates total value stored)
-        # Sum across Key dimension to get total information per value slot
-        # [1, 12, 32, 32] -> sum over d_k -> [1, 12, 32]
-        state_sum_k = S_slow.sum(dim=2)  # [B, 12, 32]
-        # Average across heads to get "Global Value State"
-        state_mean_heads = state_sum_k.mean(dim=1)  # [B, 32]
-        # Expand back to 384 dimensions (32 * 12 = 384)
-        emb_sum = state_mean_heads.repeat_interleave(12, dim=1)  # [B, 384]
-        emb_sum = F.normalize(emb_sum, dim=1)
-        
-        # 3. Weighted Combination (v6_weighted_combo_70_30 - BEST PERFORMING)
-        # 70% Structure (Diagonal) + 30% Magnitude (Sum)
-        # This gave +0.0766 margin in testing (vs -0.0209 for mean pooling)
-        final_emb = 0.7 * emb_diagonal + 0.3 * emb_sum
-        
+        final_emb = diagonals.flatten(1)  # [B, 384]
         return F.normalize(final_emb, p=2, dim=1)
     
     @torch.no_grad()
@@ -295,7 +261,7 @@ class InfiniteContextStreamer:
             if verbose:
                 print(f"🧠 Using State-Based Embedding (S_slow shape: {self.state_slow.shape})")
         else:
-            # Fallback to Mean Pooling (legacy behavior)
+            # Mean Pooling across all tokens
             if total_tokens > 0:
                 final_embedding = running_sum / total_tokens
             else:

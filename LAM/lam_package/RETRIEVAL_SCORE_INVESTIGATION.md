@@ -97,3 +97,4 @@ The **24-point gap** is likely due to:
 **Recommendation**: Test on more retrieval tasks to see if the gap is consistent, then investigate model quality vs implementation.
 
 
+

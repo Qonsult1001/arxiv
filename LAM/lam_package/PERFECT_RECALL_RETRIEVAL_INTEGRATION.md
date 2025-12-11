@@ -140,3 +140,4 @@ All features are integrated and tested. The model will automatically:
 - Work with all MTEB retrieval tasks (SciFact, NFCorpus, ArguAna, etc.)
 
 
+

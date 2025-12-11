@@ -105,3 +105,4 @@ The flat 1D architecture achieves **near-constant time** across sequence lengths
 This is the "True RNN Speed" as described in the Nested Learning paper.
 
 
+

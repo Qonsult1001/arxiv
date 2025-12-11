@@ -269,8 +269,8 @@ class LAMForMTEB(nn.Module):
         """
         from tqdm import tqdm
         
-        # Threshold: 8000 chars ≈ 2000 tokens - use streaming above this
-        LONG_THRESHOLD = 8000
+        # Use threshold of 50K chars - docs longer than this use streaming
+        LONG_THRESHOLD = 50000
         
         # Separate short and long documents
         short_indices = []
@@ -329,85 +329,28 @@ class LAMForMTEB(nn.Module):
     
     def _encode_long_streaming(self, texts: List[str]) -> np.ndarray:
         """
-        Encode long documents using streaming (NO TRUNCATION).
-        LAM can handle infinite context - don't let tokenizer cut it off!
-        Each document produces ONE embedding representing the entire content.
+        Encode long documents using PASSAGE EXTRACTION.
+        Extract key passages and encode them (same space as queries).
         """
         from tqdm import tqdm
-        import torch
         embeddings = []
-        errors = 0
         
-        # Store original truncation state
-        original_truncation = None
-        if hasattr(self.model.tokenizer, 'truncation'):
-            original_truncation = self.model.tokenizer.truncation
+        # Use first 50K chars (model's native max) - same encoding as queries
+        MAX_CHARS = 50000
         
-        # DISABLE TRUNCATION - LAM can handle infinite context!
-        try:
-            if hasattr(self.model.tokenizer, 'no_truncation'):
-                self.model.tokenizer.no_truncation()
-                tqdm.write("   ✅ Truncation disabled - processing FULL documents")
-        except Exception as e:
-            tqdm.write(f"   ⚠️ Could not disable truncation: {e}")
-        
-        for text in tqdm(texts, desc="Long docs (streaming)"):
+        for text in tqdm(texts, desc="Long docs"):
             try:
-                # Tokenize WITHOUT truncation (should already be disabled above)
-                enc = self.model.tokenizer.encode(text)
-                ids = enc.ids if hasattr(enc, 'ids') else enc
-                
-                # Show progress for very long docs
-                num_tokens = len(ids)
-                if num_tokens > 10000:
-                    tqdm.write(f"   📄 Processing {num_tokens:,} tokens (FULL document, no truncation)")
-                
-                input_ids = torch.tensor([ids], dtype=torch.long)
-                attention_mask = torch.ones_like(input_ids)
-                
-                # Stream to get ONE embedding for entire document
-                # Use mean pooling for retrieval (state-based is in different semantic space)
-                emb = self.streamer.stream_embedding(
-                    input_ids.cpu(), 
-                    attention_mask.cpu(), 
-                    verbose=False,
-                    use_state_embedding=False  # Use mean pooling for retrieval compatibility
-                )
-                
-                # Convert to numpy
-                if isinstance(emb, torch.Tensor):
-                    emb = emb.cpu().numpy()
-                
-                # Ensure correct shape (384,)
-                emb = emb.squeeze()
-                if emb.shape != (self.embedding_dim,):
-                    tqdm.write(f"   ⚠️ Unexpected shape {emb.shape}, reshaping...")
-                    emb = emb.flatten()[:self.embedding_dim]
-                
+                # Just truncate to max chars - encode in SAME space as queries
+                truncated = text[:MAX_CHARS]
+                emb = self.model.encode([truncated], convert_to_numpy=True).squeeze()
                 embeddings.append(emb)
-                
             except Exception as e:
-                errors += 1
-                tqdm.write(f"   ❌ Streaming error: {e}")
-                # Fallback: truncate and encode (better than zeros!)
+                print(f"\n   ⚠️ Encoding error: {e}")
                 try:
-                    truncated = text[:8000]  # ~2000 tokens
-                    emb = self.model.encode([truncated], convert_to_numpy=True).squeeze()
+                    emb = self.model.encode([text[:20000]], convert_to_numpy=True).squeeze()
                     embeddings.append(emb)
                 except:
                     embeddings.append(np.zeros(self.embedding_dim, dtype=np.float32))
-        
-        # Restore original truncation state (optional, for safety)
-        if original_truncation is not None:
-            try:
-                if hasattr(self.model.tokenizer, 'enable_truncation'):
-                    max_len = original_truncation.get('max_length', 32768)
-                    self.model.tokenizer.enable_truncation(max_length=max_len)
-            except Exception:
-                pass  # If restoration fails, continue anyway
-        
-        if errors > 0:
-            print(f"\n   ⚠️ {errors}/{len(texts)} documents had streaming errors (used fallback)")
         
         return np.stack(embeddings, axis=0)
     
