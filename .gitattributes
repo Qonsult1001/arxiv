@@ -6,3 +6,5 @@
 LAM/data/*.json filter=lfs diff=lfs merge=lfs -text
 LAM/data/*.gz filter=lfs diff=lfs merge=lfs -text
 LAM/data/*.jsonl filter=lfs diff=lfs merge=lfs -text
+LAM/titan_trained/*.pt filter=lfs diff=lfs merge=lfs -text
+LAM/deltanet_1M_context/*.pt filter=lfs diff=lfs merge=lfs -text
